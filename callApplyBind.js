@@ -19,11 +19,12 @@ printName();
 
 Function.prototype.myBind = function(...args){
     obj = this;
-    return function(){
-        obj.call(...args);
+    return function(...args2){
+        obj.apply(args[0],[...args.slice(1),args2]);
     } 
 }
 
-
-let myName = printFullName.myBind(name2,"Delhi","India");
-myName();
+if(printFullName instanceof Function){
+    let myName = printFullName.myBind(name2,"Delhi");
+    myName("Earth");
+}
